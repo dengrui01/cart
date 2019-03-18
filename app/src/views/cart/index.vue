@@ -1,12 +1,13 @@
 <template>
   <div class="page-cart">
     <div class="title">总价 {{totalPrice}}</div>
+    <div class="title">已选择的商品数量 {{totalNum}}</div>
     <div class="list">
       <cart-item
         v-for="(product, index) in cartProducts"
         :key="index"
         :product="product"
-        @amount-change="handleAmountChange(product, arguments)"
+        @amount-change="handleAmountChange(product, arguments)" @checkChange="cartChangeCheck"
       />
     </div>
     <add-product @add="handleAddProduct" />
@@ -22,6 +23,7 @@
     code,
     amount: 1,
     price: 100,
+    checkState:true
   })
   export default {
     name: 'cart',
@@ -34,13 +36,15 @@
         cartProducts: state => state.cart.cartProducts,
       }),
       ...mapGetters({
-        totalPrice: 'cartTotalPrice'
+        totalPrice: 'cartTotalPrice',
+        totalNum: 'cartTotalAmount'
       }),
     },
     methods: {
       ...mapActions([
         'cartAddProduct',
         'cartChangeCount',
+        'cartChangeCheck'
       ]),
       handleAmountChange(product, agrs) {
         const amount = agrs[0]

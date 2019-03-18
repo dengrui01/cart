@@ -1,14 +1,22 @@
 const state = {
-  cartProducts: [],
+  cartProducts: []
 }
 
 export const getters = {
   cartTotalPrice: state => state.cartProducts.reduce((prev, item) => {
-    return prev + item.price * item.amount
+    if (item.checkState) {
+        return prev + item.price * item.amount
+    }else {
+      return prev
+    }
   }, 0),
   cartTotalAmount: function cartTotalPrice(state) {
     return state.cartProducts.reduce(function (prev, item) {
-      return prev + item.amount;
+        if (item.checkState) {
+            return prev + item.amount;
+        }else {
+            return prev
+        }
     }, 0);
   },
 }
@@ -30,7 +38,10 @@ export const actions = {
         amount: payload.amount
       }
     )
-  }
+  },
+    cartChangeCheck({commit}, data){
+        commit('cart_product_check', data)
+    }
 }
 
 export const mutations = {
@@ -42,7 +53,11 @@ export const mutations = {
   },
   cart_product_add(state, product) {
     state.cartProducts.push(product)
-  }
+  },
+    cart_product_check(state, data){
+        const index = state.cartProducts.findIndex(product => product.code === data.code)
+        state.cartProducts[index].checkState = data.checkState
+    }
 }
 
 export default {
