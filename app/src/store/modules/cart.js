@@ -77,6 +77,7 @@ export const mutations = {
         let d = state.defaultProducts.length
         let c = state.cartProducts.length
 
+        
         if (d == c){
             state.isCheckAll = true
             state.indeterminate = false
