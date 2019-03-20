@@ -1,29 +1,40 @@
 <template>
-  <div class="product">
-    <input type="checkbox" checked="true"  @click="aclick"/>
-    <h3 class="code">
-      <router-link :to="`/products/${product.code}`">
-        商品编号: {{product.code}}
-      </router-link>
-    </h3>
-    <div class="actions">
-      <button @click="minusCount">-</button>
-      <span>数量 {{product.amount}}</span>
-      <button @click="plusCount">+</button>
-    </div>
-  </div>
+      <div class="product">
+        <a-checkbox @change="aclick" defaultChecked :checked="checkSingle"></a-checkbox>
+        <h3 class="code">
+          <router-link :to="`/products/${product.code}`">
+            商品编号: {{product.code}}
+          </router-link>
+        </h3>
+        <div class="actions">
+          <a-button shape="circle" icon="minus"  @click="minusCount"/>
+          <span>数量 {{product.amount}}</span>
+          <a-button shape="circle" icon="plus"  @click="plusCount"/>
+        </div>
+      </div>
 </template>
 <script>
   export default{
-    props: {
-      product: {
-        type: Object,
+      props: {
+          product: {
+              type: Object,
+          },
+          checkState:{
+              type:String
+          }
+          // isCheckAll:{
+          //     type:Boolean,
+          // },
       },
-    },
     data:function(){
           return {
-              state:true
+              checkSingle:this.checkState,
           }
+    },
+    watch:{
+        checkState(newValue, oldValue){
+            this.checkSingle = newValue
+        }
     },
     methods: {
       minusCount(){
