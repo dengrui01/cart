@@ -1,6 +1,6 @@
 <template>
       <div class="product">
-        <a-checkbox @change="aclick" defaultChecked :checked="checkSingle"></a-checkbox>
+        <a-checkbox @change="aclick" defaultChecked :checked="this.checkState"></a-checkbox>
         <h3 class="code">
           <router-link :to="`/products/${product.code}`">
             商品编号: {{product.code}}
@@ -26,16 +26,7 @@
           //     type:Boolean,
           // },
       },
-    data:function(){
-          return {
-              checkSingle:this.checkState,
-          }
-    },
-    watch:{
-        checkState(newValue, oldValue){
-            this.checkSingle = newValue
-        }
-    },
+
     methods: {
       minusCount(){
         if (this.product.amount > 1) {
