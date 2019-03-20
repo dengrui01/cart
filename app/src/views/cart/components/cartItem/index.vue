@@ -20,7 +20,7 @@
               type: Object,
           },
           checkState:{
-              type:String
+              type:Boolean
           }
           // isCheckAll:{
           //     type:Boolean,
